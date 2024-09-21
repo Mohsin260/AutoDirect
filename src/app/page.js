@@ -1,112 +1,123 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import CarouselSlider from "@/components/HomeComponents/CarCarousel/CarouselSlider";
+import BrowseInventory from "../components/HomeComponents/BrowseInventory";
+import LocationStepper from "@/components/HomeComponents/LocationStepper";
+import HeroSection from "@/components/HomeComponents/HeroSection";
+import VehicleTypesSelection from "@/components/HomeComponents/VehicleTypesSelection";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="flex flex-col">
+      <div className="font-sans">
+        <div className="route-home">
+          <div
+            id="mobile-nav"
+            className="border-b p-2 align-middle flex flex-row items-center justify-between xl:hidden fixed w-full"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            <div className="m-0">
+              <span className="inline-block faIcon fa-solid fa-circle-phone h-8 mx-2 my-0">
+                <svg height={29} width={29} fill="#000">
+                  <use xlinkHref="/images/icons/svgs/solid.svg#circle-phone" />
+                </svg>
+              </span>
+            </div>
+            <div className="text-center w-full px-0">
+              <Image
+                alt="Autos Direct"
+                fetchpriority="high"
+                width={209}
+                height={40}
+                decoding="async"
+                data-nImage={1}
+                style={{ color: "transparent" }}
+                // srcSet="/dealers/autos-direct/images/12.jpg?w=256&q=80 1x, /dealers/autos-direct/image/12.jpg?w=640&q=80 2x"
+                src="/images/dealers/12.jpg"
+              />
+            </div>
+            <div className="text-end m-0">
+              <span className="inline-block faIcon fa-solid fa-bars h-8 me-1 my-0">
+                <svg height={29} width={29} fill="#000">
+                  <use xlinkHref="/images/icons/svgs/solid.svg#bars" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          {/* Hero Video Section */}
+          <HeroSection />
+          {/* Vehicle Types By Styles Section */}
+          <VehicleTypesSelection />
+
+          {/* About Us Section */}
+          <div className="cElement cContainer  w-full ">
+            <div className="sc-c65a0ac7-0 cLzOVb">
+              <div className="cElement cContainer  container mx-auto sm:px-4 ">
+                <div className="sc-c65a0ac7-0 hHCgds">
+                  <div className>
+                    <div className="sc-f16f90d0-0 dRgsYv" />
+                  </div>
+                  <h3 style={{ textAlign: "center" }} className id="Xz-YR8cSfr">
+                    Used car dealer in Fredericksburg and Manassas, VA
+                  </h3>
+                  <div className="cElement cText ">
+                    <p className="ql-align-center">
+                      When you shop for your next car, get a pre-owned option
+                      from Autos Direct. Our customers can shop from over 400+
+                      cars in our inventory. We have something for everybody
+                      with cars, trucks, and SUVs in a variety of shapes,
+                      styles, and sizes. Let us get you behind the wheel of
+                      something you will love today. We don’t believe in
+                      haggling. Instead, we put our best price forward with
+                      prices that rival wholesale prices.
+                    </p>
+                  </div>
+                  <div className>
+                    <div className="sc-f16f90d0-0 dRgeeO" />
+                  </div>
+                </div>
+              </div>
+              <div className>
+                <div className="sc-f16f90d0-0 dRgsYv" />
+              </div>
+            </div>
+          </div>
+          <div />
+
+          {/* Carousel Section */}
+          <section className="xl:max-w-[1450px] mx-auto w-full">
+            <div className="row mb-4">
+              <div className="col">
+                <h3 className="h4 border-b-[3px] border-[#c61b1e] pb-3 inline-block">
+                  New Arrivals
+                </h3>
+              </div>
+              <div className="text-end col">
+                <Link
+                  className="btn btn-default"
+                  title="View all inventory"
+                  href="/inventory"
+                >
+                  View All
+                  <span className="inline-flex items-center faIcon fa-regular fa-angle-right ms-2">
+                    <svg height={14} width={16} fill="inherit" className="pt-1">
+                      <use xlinkHref="/images/icons/svgs/regular.svg#angle-right" />
+                    </svg>
+                  </span>
+                </Link>
+              </div>
+            </div>
+            <CarouselSlider />
+          </section>
+
+          {/* Browse Inventory Section */}
+          <BrowseInventory />
+
+          {/* Location Map Section */}
+          <LocationStepper />
+
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
       </div>
     </main>
   );
