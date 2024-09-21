@@ -14,7 +14,6 @@ export const metadata = {
     "Used cars, trucks and SUVs in Fredericksburg and Manassas, VA | Autos Direct",
   description:
     "Explore superior used cars at Autos Direct in Fredericksburg & Manassas, VA. Serving Woodbridge, Centreville, and Fairfax.",
-  viewport: "width=device-width, initial-scale=1.0",
   icons: {
     // icon: [
     //   // {
@@ -67,6 +66,8 @@ export const metadata = {
     "format-detection": "telephone=no",
   },
 };
+
+export const viewport = 'width=device-width, initial-scale=1.0'
 
 export default function RootLayout({ children }) {
   return (
