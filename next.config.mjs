@@ -1,24 +1,30 @@
-import { withPayload } from '@payloadcms/next/withPayload'
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js config here
+  experimental: {
+    serverComponentsHmrCache: false, // defaults to true
+  },
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'static.overfuel.com',
-        // port: '',
-        // pathname: '/account123/**',
+        protocol: "https",
+        hostname: "gfttgomnrsiyhtzqtevm.supabase.co",
       },
     ],
   },
-  experimental: {
-    reactCompiler: false
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-}
 
-export default withPayload(nextConfig)
+  async headers() {
+    return [
+      {
+        source: "/embed",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "frame-src 'self' https://roadsidecoder.created.app;",
+          },
+        ],
+      },
+    ];
+  },
+};
+
+export default nextConfig;
