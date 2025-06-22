@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Vehiqle",
+  title: "AutoDirect AI - Find Your Dream Car",
   description: "Find your Dream Car",
 };
 

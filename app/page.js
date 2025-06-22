@@ -19,14 +19,27 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col pt-20">
-      {/* Hero Section with Gradient Title */}
-      <section className="relative py-16 md:py-28 dotted-background">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Hero Section with Video Background */}
+      <section className="relative py-16 md:py-28 overflow-hidden">
+        {/* Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="\video\auto-direct-hero-video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Optional: Overlay for readability */}
+        <div className="absolute inset-0 bg-black/40 z-10" />
+        <div className="max-w-4xl mx-auto text-center relative z-20">
           <div className="mb-8">
             <h1 className="text-5xl md:text-8xl mb-4 gradient-title">
-              Find your Dream Car with Vehiql AI
+              Find your Dream Car with AutoDirect AI
             </h1>
-            <p className="text-xl text-gray-500 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-white mb-8 max-w-2xl mx-auto">
               Advanced AI Car Search and test drive from thousands of vehicles.
             </p>
           </div>
