@@ -5,10 +5,14 @@ import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { checkUser } from "@/lib/checkUser";
 import Image from "next/image";
+import Navbar from "./Navbar";
 
 const Header = async ({ isAdminPage = false }) => {
   const user = await checkUser();
   const isAdmin = user?.role === "ADMIN";
+
+  // Hide navbar on admin pages
+  const showNavbar = !isAdminPage;
 
   return (
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
@@ -25,7 +29,8 @@ const Header = async ({ isAdminPage = false }) => {
             <span className="text-xs font-extralight">admin</span>
           )}
         </Link>
-
+        {/* Show Navbar only on non-admin pages */}
+        {showNavbar && <Navbar />}
         {/* Action Buttons */}
         <div className="flex items-center space-x-4">
           {isAdminPage ? (
