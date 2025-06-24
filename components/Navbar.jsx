@@ -68,7 +68,12 @@ const Navbar = () => {
 
       {/* Mobile Menu Drawer */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex justify-end">
+        <div
+          className={clsx(
+            "fixed inset-0 z-50 bg-black/40 flex justify-end",
+            "md:hidden"
+          )}
+        >
           <div className="w-64 h-full flex flex-col my-3">
             <button
               className="self-end mb-6 p-2"
