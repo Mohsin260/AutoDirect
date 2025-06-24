@@ -84,7 +84,7 @@ const Navbar = () => {
                     href={item.href}
                     className={clsx(
                       "relative block px-2 py-1 transition-colors duration-200",
-                      isActive(item.href) ? "text-blue-600" : "text-white",
+                      isActive(item.href) ? "text-red-600" : "text-white",
                       "hover:text-red-600"
                     )}
                     onClick={() => setMenuOpen(false)}

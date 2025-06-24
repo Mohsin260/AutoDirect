@@ -32,7 +32,7 @@ const Header = async ({ isAdminPage = false }) => {
         {/* Show Navbar only on non-admin pages */}
         {showNavbar && <Navbar />}
         {/* Action Buttons */}
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           {isAdminPage ? (
             <>
               <Link href="/">
@@ -89,7 +89,7 @@ const Header = async ({ isAdminPage = false }) => {
               }}
             />
           </SignedIn>
-        </div>
+        </div> */}
       </nav>
     </header>
   );
