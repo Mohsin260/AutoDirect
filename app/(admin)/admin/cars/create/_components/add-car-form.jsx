@@ -55,7 +55,16 @@ const carFormSchema = z.object({
     const year = parseInt(val);
     return !isNaN(year) && year >= 1900 && year <= new Date().getFullYear() + 1;
   }, "Valid year required"),
-  price: z.string().min(1, "Price is required"),
+  // Preprocess price: strip currency symbols, commas and keep only digits and dot, then parse as number
+  price: z.preprocess((val) => {
+    if (typeof val === "string") {
+      const cleaned = val.replace(/[^\d.]/g, "").replace(/,(?=\d{3})/g, "");
+      return cleaned === "" ? NaN : parseFloat(cleaned);
+    }
+    if (typeof val === "number") return val;
+    return NaN;
+  }, z.number().min(1, "Price is required")),
+  // Mileage can be alphanumeric (e.g. "15 mpg city / 22 mpg highway")
   mileage: z.string().min(1, "Mileage is required"),
   color: z.string().min(1, "Color is required"),
   fuelType: z.string().min(1, "Fuel type is required"),
@@ -277,8 +286,14 @@ export const AddCarForm = () => {
     const carData = {
       ...data,
       year: parseInt(data.year),
-      price: parseFloat(data.price),
-      mileage: parseInt(data.mileage),
+      // ensure price is a number (Zod preprocess will already convert strings to numbers,
+      // but guard here in case)
+      price:
+        typeof data.price === "number"
+          ? data.price
+          : parseFloat(String(data.price).replace(/[^\d.]/g, "") || "0"),
+      // keep mileage as string to allow alphanumeric values like "15 mpg city / 22 mpg highway"
+      mileage: String(data.mileage),
       seats: data.seats ? parseInt(data.seats) : null,
     };
 
@@ -368,6 +383,13 @@ export const AddCarForm = () => {
                       id="price"
                       {...register("price")}
                       placeholder="e.g. 25000"
+                      onInput={(e) => {
+                        const val = e.target.value || "";
+                        const sanitized = val.replace(/[^\d.]/g, "");
+                        if (sanitized !== val) {
+                          setValue("price", sanitized);
+                        }
+                      }}
                       className={errors.price ? "border-red-500" : ""}
                     />
                     {errors.price && (
@@ -383,7 +405,7 @@ export const AddCarForm = () => {
                     <Input
                       id="mileage"
                       {...register("mileage")}
-                      placeholder="e.g. 15000"
+                      placeholder="e.g. 15 mpg city / 22 mpg highway"
                       className={errors.mileage ? "border-red-500" : ""}
                     />
                     {errors.mileage && (
