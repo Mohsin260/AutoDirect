@@ -1,10 +1,6 @@
+import arcjet, { createMiddleware, detectBot, shield } from "@arcjet/next";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-
-// Keep the middleware minimal to stay under Vercel's Edge Function size limit.
-// Arcjet (and other large telemetry/security SDKs) should run in separate
-// server functions or be invoked from server-side endpoints to avoid inflating
-// the middleware bundle.
 
 const isProtectedRoute = createRouteMatcher([
   "/admin(.*)",
@@ -12,6 +8,26 @@ const isProtectedRoute = createRouteMatcher([
   "/reservations(.*)",
 ]);
 
+// Create Arcjet middleware
+const aj = arcjet({
+  key: process.env.ARCJET_KEY,
+  // characteristics: ["userId"], // Track based on Clerk userId
+  rules: [
+    // Shield protection for content and security
+    shield({
+      mode: "LIVE",
+    }),
+    detectBot({
+      mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
+      allow: [
+        "CATEGORY:SEARCH_ENGINE", // Google, Bing, etc
+        // See the full list at https://arcjet.com/bot-list
+      ],
+    }),
+  ],
+});
+
+// Create base Clerk middleware
 const clerk = clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
 
@@ -23,16 +39,14 @@ const clerk = clerkMiddleware(async (auth, req) => {
   return NextResponse.next();
 });
 
-export default clerk;
+// Chain middlewares - ArcJet runs first, then Clerk
+export default createMiddleware(aj, clerk);
 
 export const config = {
-  // Narrow matcher to only protected app routes and API routes so middleware
-  // runs as little as possible (smaller bundles and less execution).
   matcher: [
-    "/admin/:path*",
-    "/saved-cars",
-    "/reservations",
-    "/api/:path*",
-    "/trpc/:path*",
+    // Skip Next.js internals and all static files, unless found in search params
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always run for API routes
+    "/(api|trpc)(.*)",
   ],
 };
