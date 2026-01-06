@@ -18,6 +18,10 @@ const clerk = clerkMiddleware(async (auth, req) => {
 
   // Call server-side Arcjet check (keeps Arcjet out of Edge bundle)
   try {
+    // Avoid recursive calls when the check API itself triggers the middleware.
+    if (req.headers.get("x-middleware-request") === "arcjet-check") {
+      return NextResponse.next();
+    }
     const origin = req.nextUrl?.origin || `https://${req.headers.get("host")}`;
     const res = await fetch(`${origin}/api/arcjet/check`, {
       method: "POST",
@@ -46,10 +50,9 @@ export default clerk;
 
 export const config = {
   matcher: [
-    "/admin/:path*",
-    "/saved-cars",
-    "/reservations",
+    // Run middleware on all non-static app routes so Clerk's auth() and
+    // `currentUser()` work reliably in server components.
+    "/((?!_next/static|_next/image|favicon.ico|public).*)",
     "/api/:path*",
-    "/trpc/:path*",
   ],
 };

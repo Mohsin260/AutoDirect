@@ -107,31 +107,21 @@
 
 @layer base {
   * {
-    /* Avoid applying utilities that may be unknown to the compiler.
-       Use CSS variables directly for border and outline colors. */
+    /* Keep border and outline colors as CSS variables to avoid unknown-utility @apply errors */
     border-color: hsl(var(--border));
     outline-color: hsl(var(--ring) / 0.5);
   }
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    @apply bg-background text-foreground;
   }
 }
 
 @layer utilities {
-  /* Define gradient utilities directly to avoid @apply limitations */
   .gradient {
-    background-image: linear-gradient(135deg, #ef4444 0%, #3b82f6 100%);
+    @apply bg-gradient-to-br from-red-500 to-blue-500;
   }
   .gradient-title {
-    background-image: linear-gradient(135deg, #ef4444 0%, #3b82f6 100%);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    padding-right: 0.5rem;
-    padding-bottom: 0.5rem;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
+    @apply gradient font-extrabold tracking-tighter pr-2 pb-2 text-transparent bg-clip-text;
   }
 }
 

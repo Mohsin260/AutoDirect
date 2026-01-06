@@ -14,6 +14,12 @@ const aj = arcjet({
 });
 
 export async function POST(request) {
+  // In development or when ARCJET_MODE=DRY_RUN, do not block requests —
+  // Arcjet should not deny local dev traffic. Return allowed quickly.
+  if (process.env.NODE_ENV !== "production" || process.env.ARCJET_MODE === "DRY_RUN") {
+    return NextResponse.json({ denied: false });
+  }
+
   try {
     const decision = await aj.protect(request);
 
